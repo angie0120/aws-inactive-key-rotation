@@ -6,15 +6,14 @@ A Python-based compliance tool that scans IAM users across an AWS account to ide
 
 ## Key Features
 
-- AWS IAM Integration — Connects using a specified AWS profile or default credentials.
-- Access Key Analysis — Evaluates key age, last used date, and usage frequency.
-- Risk Classification — Tags keys as CRITICAL, HIGH, MEDIUM, LOW, or COMPLIANT.
-- Actionable Recommendations — Suggests whether to rotate, monitor, or delete keys.
-- Report Generation — Outputs JSON and CSV reports with detailed summaries.
-- Compliance Evaluation — Assesses overall security posture against:
+- AWS IAM integration — Connects using a specified AWS profile or default credentials.
+- Access key analysis — Evaluates key age, last used date, and usage frequency.
+- Risk classification — Tags keys as CRITICAL, HIGH, MEDIUM, LOW, or COMPLIANT.
+- Actionable recommendations — Suggests whether to rotate, monitor, or delete keys.
+- Report generation — Outputs JSON and CSV reports with detailed summaries.
+- Compliance evaluation — Assesses overall security posture against:
   - SOC 2 (CC6.1 - Logical and Physical Access Controls)
   - NIST 800-53 (IA-4 - Identifier Management)
-- Multi-region Support — Default region is us-east-1, but can be configured.
 
 ---
 
@@ -227,22 +226,18 @@ After running, you'll get three reports:
 
 ## Design Considerations
 
-Several design goals and considerations guided the development of this tool:
 - Security Awareness First: Built around the idea that unused or outdated IAM keys are a major attack vector.
 - Compliance Integration: Included mapping to SOC 2 and NIST standards to reflect real-world security needs.
-- Modular and Extensible: Separated logic into methods to make future enhancements (like email alerts or Slack integration) easier.
 - User-Friendly CLI Output: Focused on readable symbols (✅, ❌, ⚠️) and summaries to help users quickly understand the state of their keys.
-- Beginner-Friendly Code: Used clear variable names and verbose error messages to help others understand and learn from the script.
 
 ---
 
 ## What I Learned
 
-- AWS IAM Fundamentals: I now better understand how IAM users, access keys, and usage data work.
+- AWS IAM fundamentals: I now better understand how IAM users and access keys work.
 - Python & boto3: Learned how to use the boto3 library to interact with AWS programmatically.
-- Risk & Compliance Thinking: Gained experience in interpreting security standards and building tools around them.
-- Report Generation: Learned how to generate and format structured JSON and CSV reports from analysis.
-- CLI App Design: Built a real-world CLI tool with argument parsing, error handling, and logging.
+- Risk & compliance: Gained experience in interpreting security standards and building tools around them.
+- Report generation: Learned how to generate and format structured JSON and CSV reports.
 
 ---
 
