@@ -90,7 +90,7 @@ aws configure sso or aws configure
 
 python inactive_key_checker.py --profile your-profile-name --region us-east-1
 
-(Refer to link in the Resources section below for full Python code for password_policy_checker.py)
+(Refer to link in the Resources section below for full Python code for inactive_key_checker.py)
 
 ### Example code snippets
 
