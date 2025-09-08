@@ -92,7 +92,7 @@ python inactive_key_checker.py --profile your-profile-name --region us-east-1
 
 (Refer to link in the Resources section below for full Python code for inactive_key_checker.py)
 
-### Example code snippets
+### Example code snippets - Full code can be found in link in Resources section below
 
 Below are three important code blocks
 
