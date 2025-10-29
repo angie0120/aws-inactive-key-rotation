@@ -6,12 +6,12 @@ A Python-based compliance tool that scans IAM users across an AWS account to ide
 
 ## Key Features
 
-- AWS IAM integration — Connects using a specified AWS profile or default credentials.
-- Access key analysis — Evaluates key age, last used date, and usage frequency.
-- Risk classification — Tags keys as CRITICAL, HIGH, MEDIUM, LOW, or COMPLIANT.
-- Actionable recommendations — Suggests whether to rotate, monitor, or delete keys.
-- Report generation — Outputs JSON and CSV reports with detailed summaries.
-- Compliance evaluation — Assesses overall security posture against:
+- AWS IAM integration: Connects using a specified AWS profile or default credentials.
+- Access key analysis: Evaluates key age, last used date, and usage frequency.
+- Risk classification: Tags keys as CRITICAL, HIGH, MEDIUM, LOW, or COMPLIANT.
+- Actionable recommendations: Suggests whether to rotate, monitor, or delete keys.
+- Report generation: Outputs JSON and CSV reports with detailed summaries.
+- Compliance evaluation: Assesses overall security posture against:
   - SOC 2 (CC6.1 - Logical and Physical Access Controls)
   - NIST 800-53 (IA-4 - Identifier Management)
 
@@ -22,7 +22,7 @@ A Python-based compliance tool that scans IAM users across an AWS account to ide
 | Tool / Library        | Purpose                                                         |
 | --------------------- | --------------------------------------------------------------- |
 | `Python 3`            | Core programming language                                       |
-| `boto3`               | AWS SDK for Python — used to interact with IAM and STS services |
+| `boto3`               | AWS SDK for Python: used to interact with IAM and STS services |
 | `argparse`            | Command-line interface for parsing CLI arguments                |
 | `json`, `csv`         | Report generation and data serialization                        |
 | `datetime`            | Time-based calculations for key age and last usage              |
