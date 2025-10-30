@@ -1,10 +1,12 @@
 # AWS Inactive Key Rotation Checker
 
-Automate IAM access key lifecycle analysis and compliance reporting in AWS using Python and Boto3.
+Automate AWS IAM access key lifecycle assessments and generate SOC 2/NIST-aligned compliance reports using Python and Boto3.
 
 ---
 
 ## About this project
+
+This tool demonstrates how GRC engineering translates cloud security controls into automated, auditable evidence.
 
 This project identifies inactive or outdated IAM access keys across AWS accounts and evaluates them against security and compliance standards such as SOC 2 CC6.1 and NIST 800-53 IA-4. It provides actionable remediation recommendations, compliance reports (JSON and CSV), and visual summaries for cloud governance and security teams.
 
@@ -29,6 +31,19 @@ This project identifies inactive or outdated IAM access keys across AWS accounts
 ## Architecture & Logic Flow
 
 ![Flowchart](./assets/inactive_keys_flowchart.png)
+
+---
+
+## How it works
+
+1. Initializes a secure AWS session using boto3 with your chosen profile and region.
+2. Scans all IAM users and retrieves access key metadata (creation date, last used date).
+3. Analyzes key activity to determine whether keys are active, stale, or unused.
+4. Classifies keys by risk level - CRITICAL, HIGH, MEDIUM, LOW, or COMPLIANT.
+5. Generates compliance scores and JSON/CSV reports with actionable recommendations.
+6. Displays a readable CLI summary highlighting non-compliant keys.
+
+All analysis is automated and can be extended into CI/CD compliance checks or AWS Config rules.
 
 ---
 
@@ -86,19 +101,6 @@ python inactive_key_checker.py --profile your-profile-name --region us-east-1
 
 ---
 
-## How it works
-
-1. Initializes a secure AWS session using boto3 with your chosen profile and region.
-2. Scans all IAM users and retrieves access key metadata (creation date, last used date).
-3. Analyzes key activity to determine whether keys are active, stale, or unused.
-4. Classifies keys by risk level - CRITICAL, HIGH, MEDIUM, LOW, or COMPLIANT.
-5. Generates compliance scores and JSON/CSV reports with actionable recommendations.
-6. Displays a readable CLI summary highlighting non-compliant keys.
-
-All analysis is automated and can be extended into CI/CD compliance checks or AWS Config rules.
-
----
-
 ## Core Components
 
 | Component                      | Description                                                                 |
@@ -111,7 +113,7 @@ All analysis is automated and can be extended into CI/CD compliance checks or AW
 
 ---
 ### Example code snippets
-*Note: Note: Refer to the [Resources](#resources) section below for the full Python script.*
+*Note: Refer to the [Resources](#resources) section below for the full Python script.*
 
 #### 1. Session initialization
 
@@ -215,7 +217,9 @@ def run_assessment(self):
 
 ---
 
-### 4. Reports & Output Files
+### 4. Reporting & Evidence Outputs
+
+These reports serve as audit evidence for IAM key rotation control validation.
 
 After execution, three report types are generated:
 
@@ -246,6 +250,14 @@ After execution, three report types are generated:
 
 ---
 
+## Use Cases
+
+- Integrate into CI/CD pipelines to enforce continuous IAM key rotation compliance
+- Generate SOC 2 and NIST evidence automatically for audit readiness
+- Extend AWS Config or Security Hub workflows with key lifecycle analytics
+
+---
+
 ## Governance & Security
 
 - Enforces least-privilege IAM permissions for operation.
@@ -257,11 +269,10 @@ After execution, three report types are generated:
 
 ## What I Learned
 
-- Deepened understanding of AWS IAM and credential lifecycle management.
-- Applied GRC engineering principles by mapping controls to SOC 2 and NIST standards.
-- Strengthened knowledge of Python, boto3, and AWS automation.
-- Designed human-readable reports for both auditors and technical teams.
-- Built an end-to-end process to translate compliance controls into code.
+- Automated IAM credential lifecycle reviews using Python and AWS APIs.
+- Mapped NIST and SOC 2 controls directly into code logic.
+- Designed audit-ready compliance reports for GRC teams.
+- Strengthened AWS automation and governance-by-code principles.
 
 ---
 
