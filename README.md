@@ -1,66 +1,57 @@
 # AWS Inactive Key Rotation Checker
 
-A Python-based compliance tool that scans IAM users across an AWS account to identify inactive, unused, or outdated access keys. The tool provides actionable recommendations and generates detailed reports in both JSON and CSV formats, making it easier to align with compliance standards like SOC 2 CC6.1 and NIST 800-53 IA-4.
+Automate IAM access key lifecycle analysis and compliance reporting in AWS using Python and Boto3.
 
 ---
 
-## Key Features
+## About this project
 
-- AWS IAM integration: Connects using a specified AWS profile or default credentials.
-- Access key analysis: Evaluates key age, last used date, and usage frequency.
-- Risk classification: Tags keys as CRITICAL, HIGH, MEDIUM, LOW, or COMPLIANT.
-- Actionable recommendations: Suggests whether to rotate, monitor, or delete keys.
-- Report generation: Outputs JSON and CSV reports with detailed summaries.
-- Compliance evaluation: Assesses overall security posture against:
-  - SOC 2 (CC6.1 - Logical and Physical Access Controls)
-  - NIST 800-53 (IA-4 - Identifier Management)
+This project identifies inactive or outdated IAM access keys across AWS accounts and evaluates them against security and compliance standards such as SOC 2 CC6.1 and NIST 800-53 IA-4. It provides actionable remediation recommendations, compliance reports (JSON and CSV), and visual summaries for cloud governance and security teams.
+
+> **Why this matters**:
+> Unused or stale access keys are among the most common sources of credential exposure. This tool automates their detection, enabling continuous compliance and reducing manual audit overhead for GRC and security engineers.
 
 ---
 
-## Technologies Used
+## Overview
 
-| Tool / Library        | Purpose                                                         |
-| --------------------- | --------------------------------------------------------------- |
-| `Python 3`            | Core programming language                                       |
-| `boto3`               | AWS SDK for Python: used to interact with IAM and STS services |
-| `argparse`            | Command-line interface for parsing CLI arguments                |
-| `json`, `csv`         | Report generation and data serialization                        |
-| `datetime`            | Time-based calculations for key age and last usage              |
-| `botocore.exceptions` | Robust error handling for AWS SDK calls                         |
-| Windsurf IDE          | Cloud-based IDE used for writing, testing, and debugging code   |
-
-Windsurf IDE helped streamline development in the cloud, especially for interacting with AWS services.
+| Area                      | Description                                                                       |
+| ------------------------- | --------------------------------------------------------------------------------- |
+| **Purpose**               | Detect inactive or outdated IAM access keys                                       |
+| **Focus**                 | Automate key lifecycle assessment, classify risk, and generate compliance reports |
+| **Tech Stack**            | Python • Boto3 • argparse • JSON & CSV • AWS IAM APIs                             |
+| **Key Outcome**           | JSON and CSV compliance reports with detailed risk classifications                |
+| **Compliance Frameworks** | SOC 2 CC6.1, NIST 800-53 IA-4                                                     |
+| **Target Users**          | Security, compliance, and GRC engineering teams                                   |
 
 ---
 
-## High-Level Logic Flow
+## Architecture & Logic Flow
 
 ![Flowchart](./assets/inactive_keys_flowchart.png)
 
 ---
 
-## Environment Setup
+## Quick Start
 
-### 1. Set up virtual environment
+### 1. Set up your Python virtual environment
 
-#### Create and activate virtual environment:
-python3 -m venv venv
-
-#### On Windows:
-venv\Scripts\activate
-
-#### On macOS/Linux:
-source venv/bin/activate
-
-#### Install dependencies:
-pip install -boto3
+```bash
+python3 -m venv venv            # Create and activate virtual environment
+source venv/bin/activate        # macOS/Linux
+venv\Scripts\activate           # Windows
+pip install boto3               # Install dependencies
+```
 
 ---
 
-### 2.  AWS Configuration
+### 2. Configure AWS credentials
 
-#### Configure your AWS credentials using:
-aws configure sso or aws configure
+```bash
+aws configure sso
+# or
+aws configure
+```
 
 <details> <summary> <strong>Required IAM Permissions</strong> (click to expand)</summary>
 
@@ -85,19 +76,46 @@ aws configure sso or aws configure
 
 ---
 
-### 3. How to Run
+### 3. Run the tool
 
+```bash
 python inactive_key_checker.py --profile your-profile-name --region us-east-1
+```
 
-(Refer to link in the Resources section below for full Python code for inactive_key_checker.py)
+(Refer to link in the [Resources](#resources) section below for full Python script)
 
-### Example code snippets - Full code can be found in link in Resources section below
+---
 
-Below are three important code blocks
+## How it works
 
-#### Session initialization
+1. Initializes a secure AWS session using boto3 with your chosen profile and region.
+2. Scans all IAM users and retrieves access key metadata (creation date, last used date).
+3. Analyzes key activity to determine whether keys are active, stale, or unused.
+4. Classifies keys by risk level - CRITICAL, HIGH, MEDIUM, LOW, or COMPLIANT.
+5. Generates compliance scores and JSON/CSV reports with actionable recommendations.
+6. Displays a readable CLI summary highlighting non-compliant keys.
 
-This function initializes a session with AWS using the provided profile and region, connects to IAM and STS services, and retrieves the AWS account ID. It handles errors like missing profiles or credentials and confirms a successful connection to AWS.
+All analysis is automated and can be extended into CI/CD compliance checks or AWS Config rules.
+
+---
+
+## Core Components
+
+| Component                      | Description                                                                 |
+| ------------------------------ | --------------------------------------------------------------------------- |
+| **KeyRotationChecker**         | Initializes AWS session and coordinates the IAM scan and compliance logic   |
+| **analyze_all_access_keys()**  | Evaluates each IAM user’s access keys for age, usage, and compliance status |
+| **Risk Classification Engine** | Assigns risk levels (Critical–Compliant) based on thresholds and usage      |
+| **Reporting Module**           | Outputs structured JSON/CSV reports for automation and audit use            |
+| **CLI Interface**              | Provides human-readable summaries and color-coded risk visualization        |
+
+---
+### Example code snippets
+*Note: Note: Refer to the [Resources](#resources) section below for the full Python script.*
+
+#### 1. Session initialization
+
+Establishes a secure AWS session and retrieves the account ID.
 
 <details> <summary> View Code</summary>
 
@@ -126,9 +144,9 @@ def initialize_aws_session(self):
 ```
 </details>
 
-#### Analyze access keys
+#### 2. Access Key Analysis
 
-This main analysis function retrieves all IAM users, evaluates each user's access keys against age and usage policies, classifies keys by risk level, and summarizes the findings including compliance percentages and risk counts.
+Evaluates each IAM user's keys for compliance.
 
 <details> <summary> View Code</summary>
 
@@ -154,9 +172,9 @@ def analyze_all_access_keys(self):
 ```
 </details>
 
-#### Running the assessment
+#### 3. Assessment Orchestration
 
-This function coordinates the overall assessment: it initializes the AWS session, runs the analysis, generates reports in JSON and CSV, and prints a detailed summary with compliance results and recommendations to the console.
+Coordinates initialization, analysis, and reporting.
 
 <details> <summary> View Code</summary>
 
@@ -199,45 +217,51 @@ def run_assessment(self):
 
 ### 4. Reports & Output Files
 
-After running, you'll get three reports:
+After execution, three report types are generated:
 
-- Report output in your terminal (compliant or non-compliant report - example below)
-- JSON report (non-compliant sample output below)
-- CSV report (non-compliant sample output below)
+1. Report output in your terminal (compliant or non-compliant report - example below)
+2. JSON report (non-compliant sample output below)
+3. CSV report (non-compliant sample output below)
 
-<details> <summary> <strong>Sample CLI output showing non-compliance</strong> (click to expand)</summary>
+**1. Sample CLI output showing non-compliance**
 
 ![CLI Report](./assets/non-compliant-keys.png)
 
-</details>
-
-<details> <summary> <strong>Sample JSON screenshot showing non-compliance</strong> (click to expand)</summary>
+**2. Sample JSON screenshot showing non-compliance**
 
 ![JSON Report](./assets/keys_report_json.png)
 
-</details>
-
-<details> <summary> <strong>Sample CSV screenshot showing non-compliance</strong> (click to expand)</summary>
+**3. Sample CSV screenshot showing non-compliance**
   
 ![CSV Report](./assets/keys_report_csv.png)
 
-</details>
 ---
 
-## Design Considerations
+## Compliance Context
 
-- Security Awareness First: Built around the idea that unused or outdated IAM keys are a major attack vector.
-- Compliance Integration: Included mapping to SOC 2 and NIST standards to reflect real-world security needs.
-- User-Friendly CLI Output: Focused on readable symbols (✅, ❌, ⚠️) and summaries to help users quickly understand the state of their keys.
+| Framework            | Relevant Domains        | Description                                                           |
+| -------------------- | ----------------------- | --------------------------------------------------------------------- |
+| **SOC 2 CC6.1**      | Logical Access Controls | Validates that logical access mechanisms enforce credential rotation  |
+| **NIST 800-53 IA-4** | Identifier Management   | Ensures identifiers and credentials are periodically reviewed/rotated |
+
+---
+
+## Governance & Security
+
+- Enforces least-privilege IAM permissions for operation.
+- Generates audit-ready compliance reports for SOC/NIST frameworks.
+- Integrates easily into GRC automation workflows or CI/CD pipelines.
+- CLI workflow supports repeatability and reduces manual error.
 
 ---
 
 ## What I Learned
 
-- AWS IAM fundamentals: I now better understand how IAM users and access keys work.
-- Python & boto3: Learned how to use the boto3 library to interact with AWS programmatically.
-- Risk & compliance: Gained experience in interpreting security standards and building tools around them.
-- Report generation: Learned how to generate and format structured JSON and CSV reports.
+- Deepened understanding of AWS IAM and credential lifecycle management.
+- Applied GRC engineering principles by mapping controls to SOC 2 and NIST standards.
+- Strengthened knowledge of Python, boto3, and AWS automation.
+- Designed human-readable reports for both auditors and technical teams.
+- Built an end-to-end process to translate compliance controls into code.
 
 ---
 
@@ -246,6 +270,6 @@ After running, you'll get three reports:
 - [Inactive Key Rotation Check](https://www.patreon.com/posts/lab-inactive-key-137806331?collection=1606822)
 - [GRC Engineering](https://grcengineeringbook.com/)
 
-
+---
 
 
